@@ -10,12 +10,17 @@ import * as rmfr from 'rmfr';
 import { createAttestationOptions as CreateAttestationOptions } from './attestation.interfaces';
 const readFile = promisify(fs.readFile);
 const exists = promisify(fs.exists);
+import * as chrome from 'chrome-aws-lambda';
 
 @Injectable()
 export class GenerateService {
   browser;
   async init() {
-    this.browser = await puppeteer.launch();
+    this.browser = await puppeteer.launch({
+      args: chrome.args,
+      executablePath: await chrome.executablePath,
+      headless: true,
+    });
   }
 
   async downloadPdf(options: CreateAttestationOptions) {
