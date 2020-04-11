@@ -1,4 +1,4 @@
-export interface createAttestationOptions {
+export interface CreateAttestationOptions {
   firstName: string;
   lastName: string;
   birthday: string;

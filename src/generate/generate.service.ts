@@ -7,20 +7,28 @@ import * as fs from 'fs';
 import { join } from 'path';
 import { promisify } from 'util';
 import * as rmfr from 'rmfr';
-import { createAttestationOptions as CreateAttestationOptions } from './attestation.interfaces';
+import { CreateAttestationOptions } from './attestation.interfaces';
 const readFile = promisify(fs.readFile);
 const exists = promisify(fs.exists);
-import * as chrome from 'chrome-aws-lambda';
 
 @Injectable()
 export class GenerateService {
   browser;
+
   async init() {
-    this.browser = await puppeteer.launch({
-      args: chrome.args,
-      executablePath: await chrome.executablePath,
-      headless: chrome.headless,
-    });
+    if (process.env.NOW_SH) {
+      const puppeteerCore = require('puppeteer-core');
+      const chrome = require('chrome-aws-lambda');
+      this.browser = await puppeteerCore.launch({
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: chrome.headless,
+      });
+    } else {
+      this.browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+    }
   }
 
   async downloadPdf(options: CreateAttestationOptions) {
