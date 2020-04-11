@@ -1,6 +1,7 @@
 import { Controller, Get, Res, Header, Query } from '@nestjs/common';
 import { Response } from 'express';
 import { GenerateService } from './generate.service';
+import { MotifDeSortie } from './attestation.interfaces';
 
 @Controller('generate')
 export class GenerateController {
@@ -16,6 +17,7 @@ export class GenerateController {
     @Query('address') address: string,
     @Query('town') town: string,
     @Query('zipCode') zipCode: string,
+    @Query('reason') reason: MotifDeSortie,
     @Query('date') date: string,
     @Query('time') time: string,
     @Res() res: Response,
@@ -28,6 +30,7 @@ export class GenerateController {
       address,
       town,
       zipCode,
+      reason,
       date,
       time,
     });

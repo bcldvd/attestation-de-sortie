@@ -8,7 +8,10 @@ import { promisify } from 'util';
 import * as rmfr from 'rmfr';
 import { DateTime } from 'luxon';
 import { covidUrl } from './generate.constants';
-import { CreateAttestationOptions } from './attestation.interfaces';
+import {
+  CreateAttestationOptions,
+  MotifDeSortie,
+} from './attestation.interfaces';
 const readFile = promisify(fs.readFile);
 const exists = promisify(fs.exists);
 
@@ -72,9 +75,7 @@ export class GenerateService {
     await this.fillField(page, '#field-address', options.address);
     await this.fillField(page, '#field-town', options.town);
     await this.fillField(page, '#field-zipcode', options.zipCode);
-    await page.evaluate(() => {
-      (document.querySelector('#checkbox-courses') as any).click();
-    });
+    await this.fillCheckbox(page, options.reason);
     await this.fillField(page, '#field-datesortie', options.date);
     await this.fillField(
       page,
@@ -92,6 +93,13 @@ export class GenerateService {
     if (value) {
       return page.type(field, value);
     }
+  }
+
+  async fillCheckbox(page, choice: MotifDeSortie) {
+    if (!choice) choice = MotifDeSortie.courses;
+    await page.evaluate(choice => {
+      (document.querySelector(`#checkbox-${choice}`) as any).click();
+    }, choice);
   }
 
   async waitForFileToDownload(downloadPath) {
