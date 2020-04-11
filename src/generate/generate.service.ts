@@ -86,6 +86,9 @@ export class GenerateService {
 
   private getCurrentTime() {
     const now = DateTime.local().setZone('France/Paris');
+    if (process.env.HEROKU) {
+      now.plus({ hours: 2 });
+    }
     return `${now.hours}:${now.minutes}`;
   }
 
