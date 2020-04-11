@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
-import { covidUrl } from './generate.constants';
 import { v4 as uuid } from 'uuid';
 import { Readable } from 'stream';
 import * as fs from 'fs';
 import { join } from 'path';
 import { promisify } from 'util';
 import * as rmfr from 'rmfr';
+import { DateTime } from 'luxon';
+import { covidUrl } from './generate.constants';
 import { CreateAttestationOptions } from './attestation.interfaces';
 const readFile = promisify(fs.readFile);
 const exists = promisify(fs.exists);
@@ -83,10 +84,8 @@ export class GenerateService {
   }
 
   private getCurrentTime() {
-    const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    return `${hours}:${minutes}`;
+    const now = DateTime.local().setZone('France/Paris');
+    return `${now.hours}:${now.minutes}`;
   }
 
   async fillField(page, field, value) {
