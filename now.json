@@ -11,5 +11,8 @@
             "src": "/.*",
             "dest": "dist/main.js"
         }
-    ]
+    ],
+    "env": {
+        "NOW_SH": "true"
+    }
 }
