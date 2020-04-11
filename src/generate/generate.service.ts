@@ -6,7 +6,6 @@ import * as fs from 'fs';
 import { join } from 'path';
 import { promisify } from 'util';
 import * as rmfr from 'rmfr';
-import { DateTime } from 'luxon';
 import { covidUrl } from './generate.constants';
 import {
   CreateAttestationOptions,
@@ -20,19 +19,9 @@ export class GenerateService {
   browser;
 
   async init() {
-    if (process.env.NOW_SH) {
-      const puppeteerCore = require('puppeteer-core');
-      const chrome = require('chrome-aws-lambda');
-      this.browser = await puppeteerCore.launch({
-        args: chrome.args,
-        executablePath: await chrome.executablePath,
-        headless: chrome.headless,
-      });
-    } else {
-      this.browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      });
-    }
+    this.browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
   }
 
   async downloadPdf(options: CreateAttestationOptions) {
@@ -77,22 +66,7 @@ export class GenerateService {
     await this.fillField(page, '#field-zipcode', options.zipCode);
     await this.fillCheckbox(page, options.reason);
     await this.fillField(page, '#field-datesortie', options.date);
-    await this.fillField(
-      page,
-      '#field-heuresortie',
-      options.time || this.getCurrentTime(),
-    );
-  }
-
-  private getCurrentTime() {
-    const now = DateTime.local().setZone('Europe/Paris');
-    console.log('time before heroku check is ', now.hours);
-    if (process.env.HEROKU) {
-      now.plus({ hours: 2 });
-      console.log('env HEROKU');
-    }
-    console.log('time is ', now.hours);
-    return `${now.hours}:${now.minutes}`;
+    await this.fillField(page, '#field-heuresortie', options.time);
   }
 
   async fillField(page, field, value) {
