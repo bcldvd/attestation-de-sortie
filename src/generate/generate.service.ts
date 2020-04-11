@@ -75,7 +75,18 @@ export class GenerateService {
       (document.querySelector('#checkbox-courses') as any).click();
     });
     await this.fillField(page, '#field-datesortie', options.date);
-    await this.fillField(page, '#field-heuresortie', options.time);
+    await this.fillField(
+      page,
+      '#field-heuresortie',
+      options.time || this.getCurrentTime(),
+    );
+  }
+
+  private getCurrentTime() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    return `${hours}:${minutes}`;
   }
 
   async fillField(page, field, value) {
