@@ -85,10 +85,13 @@ export class GenerateService {
   }
 
   private getCurrentTime() {
-    const now = DateTime.local().setZone('France/Paris');
+    const now = DateTime.local().setZone('Europe/Paris');
+    console.log('time before heroku check is ', now.hours);
     if (process.env.HEROKU) {
       now.plus({ hours: 2 });
+      console.log('env HEROKU');
     }
+    console.log('time is ', now.hours);
     return `${now.hours}:${now.minutes}`;
   }
 
