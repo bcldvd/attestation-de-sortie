@@ -19,7 +19,7 @@ export class GenerateService {
     this.browser = await puppeteer.launch({
       args: chrome.args,
       executablePath: await chrome.executablePath,
-      headless: true,
+      headless: chrome.headless,
     });
   }
 
