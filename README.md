@@ -1,32 +1,45 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+  <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/50/Bloc_Marianne.svg/440px-Bloc_Marianne.svg.png" width="320" alt="Marianne" />
 </p>
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+  <p align="center">Générateur d'attestation de déplacement dérogatoire</p>
+  <br>
+    <!-- <p align="center">
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a> -->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Ce générateur remplit [le générateur officiel](https://media.interieur.gouv.fr/deplacement-covid-19/) via puppeteer et expose cela via un endpoint REST.\
+De cette façon, plusieurs usages s'offrent à vous :
+
+- Automatiser la génération de **votre** attestation
+- Générer l'attestation via un assistant vocal
+
+<br>
+
+## Utilisation
+
+Cette application n'expose qu'un module : `/generate`.\
+Vos données sont à passer en query parameter, la liste exhaustive se trouve ici : [generate.controller.ts](https://github.com/bcldvd/attestation-de-sortie/blob/master/src/generate/generate.controller.ts)
+
+Les parametres suivants se remplissent automatiquement si non définis :
+
+- date
+- time
+- reason
+
+`reason` correspond au motif de sortie, dont la liste se trouve ici : [attestation.interfaces.ts](https://github.com/bcldvd/attestation-de-sortie/blob/master/src/generate/attestation.interfaces.ts#L14-L24)
+
+### Exemples d'URLs :
+
+```
+http://localhost:3000/generate?firstName=Emmanuel&lastName=Macron&birthday=21/12/1977&placeOfBirth=Amiens&address=55%20Rue%20du%20Faubourg%20Saint-Honor%C3%A9&town=Paris&zipCode=75008&reason=achats
+```
+
+```
+https://attestation-de-sortie.herokuapp.com/generate?firstName=Emmanuel&lastName=Macron&birthday=21/12/1977&placeOfBirth=Amiens&address=55%20Rue%20du%20Faubourg%20Saint-Honor%C3%A9&town=Paris&zipCode=75008
+```
 
 ## Installation
 
@@ -34,42 +47,20 @@
 $ npm install
 ```
 
-## Running the app
+## Lancer l'application
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
+$ npm run dev
 
 # production mode
 $ npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Ce projet est "open source" et sous la licence MIT. N'hésitez pas à contribuer pour le rendre encore meilleur 🤗.
 
-## Stay in touch
+## Licence
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-  Nest is [MIT licensed](LICENSE).
+Ce projet est licencié [MIT](LICENSE).
