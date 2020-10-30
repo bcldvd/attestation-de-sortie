@@ -20,11 +20,7 @@ export class GenerateService {
 
   async init() {
     this.browser = await puppeteer.launch({
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-      ],
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
   }
 
