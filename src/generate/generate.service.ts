@@ -60,13 +60,21 @@ export class GenerateService {
     await this.fillField(page, '#field-firstname', options.firstName);
     await this.fillField(page, '#field-lastname', options.lastName);
     await this.fillField(page, '#field-birthday', options.birthday);
-    await this.fillField(page, '#field-lieunaissance', options.placeOfBirth);
+    await this.fillField(page, '#field-placeofbirth', options.placeOfBirth);
     await this.fillField(page, '#field-address', options.address);
-    await this.fillField(page, '#field-town', options.town);
+    await this.fillField(page, '#field-city', options.town);
     await this.fillField(page, '#field-zipcode', options.zipCode);
     await this.fillCheckbox(page, options.reason);
     await this.fillField(page, '#field-datesortie', options.date);
+    if (!options.time) {
+      options.time = this.getCurrentTime();
+    }
     await this.fillField(page, '#field-heuresortie', options.time);
+  }
+
+  private getCurrentTime() {
+    const date = new Date();
+    return `${date.getHours()}:${date.getMinutes()}`;
   }
 
   async fillField(page, field, value) {
@@ -76,7 +84,7 @@ export class GenerateService {
   }
 
   async fillCheckbox(page, choice: MotifDeSortie) {
-    if (!choice) choice = MotifDeSortie.courses;
+    if (!choice) choice = MotifDeSortie.achats;
     await page.evaluate(choice => {
       (document.querySelector(`#checkbox-${choice}`) as any).click();
     }, choice);
