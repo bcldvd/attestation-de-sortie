@@ -35,7 +35,7 @@ export class GenerateService {
 
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
-    await this.delay(5000);
+    await this.delay(15000);
 
     const { buffer, fileName } = await this.getFileBuffer(page);
 
