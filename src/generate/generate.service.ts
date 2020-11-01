@@ -22,6 +22,7 @@ export class GenerateService {
     const path = covidUrl;
     const page = await this.browser.newPage();
     await page.goto(path, { waitUntil: 'networkidle2' });
+    await page.setBypassCSP(true);
 
     await this.fillFields(page, options);
 
