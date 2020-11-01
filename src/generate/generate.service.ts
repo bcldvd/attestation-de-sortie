@@ -74,6 +74,7 @@ export class GenerateService {
     await this.fillField(page, '#field-datesortie', options.date);
     if (!options.time) {
       options.time = this.getCurrentTime();
+      console.log('time', options.time);
     }
     await this.fillField(page, '#field-heuresortie', options.time);
   }
