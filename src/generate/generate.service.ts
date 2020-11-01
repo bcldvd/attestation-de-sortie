@@ -1,18 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
-import { v4 as uuid } from 'uuid';
 import { Readable } from 'stream';
-import * as fs from 'fs';
-import { join } from 'path';
-import { promisify } from 'util';
-import * as rmfr from 'rmfr';
 import { covidUrl } from './generate.constants';
 import {
   CreateAttestationOptions,
   MotifDeSortie,
 } from './attestation.interfaces';
-const readFile = promisify(fs.readFile);
-const exists = promisify(fs.exists);
 
 @Injectable()
 export class GenerateService {
@@ -30,29 +23,43 @@ export class GenerateService {
     const page = await this.browser.newPage();
     await page.goto(path, { waitUntil: 'networkidle2' });
 
-    const id = uuid();
-    const downloadPath = `./tmp/${id}`;
-    await page._client.send('Page.setDownloadBehavior', {
-      behavior: 'allow',
-      downloadPath,
-    });
-
     await this.fillFields(page, options);
 
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
+    await page.waitFor(900);
 
-    const fileName = await this.waitForFileToDownload(downloadPath);
+    const { buffer, fileName } = await this.getFileBuffer(page);
 
     page.close();
 
-    const filePath = join(downloadPath, fileName);
-    const buffer = await readFile(filePath);
-    await rmfr(downloadPath);
     const stream = this.getReadableStream(buffer);
 
     return {
       stream,
+      fileName,
+    };
+  }
+
+  async getFileBuffer(page) {
+    const { stringifiedBuffer, fileName } = await page.evaluate(async () => {
+      function ab2str(buf) {
+        return String.fromCharCode.apply(null, new Uint8Array(buf));
+      }
+
+      const elems = document.getElementsByTagName('a');
+      const a = elems[elems.length - 1];
+      const url = a['href'];
+      const fileName = a['download'];
+      const buff = await fetch(url).then(r => r.arrayBuffer());
+      return {
+        stringifiedBuffer: ab2str(buff),
+        fileName,
+      };
+    });
+
+    return {
+      buffer: Buffer.from(this.str2ab(stringifiedBuffer)),
       fileName,
     };
   }
@@ -91,26 +98,6 @@ export class GenerateService {
     }, choice);
   }
 
-  async waitForFileToDownload(downloadPath) {
-    let filename;
-
-    while (!filename || filename.endsWith('.crdownload')) {
-      let dirExist = await exists(downloadPath);
-      if (dirExist) {
-        filename = fs.readdirSync(downloadPath)[0];
-      }
-      await this.delay(200);
-    }
-
-    return filename;
-  }
-
-  async delay(time) {
-    return new Promise(function(resolve) {
-      setTimeout(resolve, time);
-    });
-  }
-
   getReadableStream(buffer: Buffer): Readable {
     const stream = new Readable();
 
@@ -118,5 +105,14 @@ export class GenerateService {
     stream.push(null);
 
     return stream;
+  }
+
+  private str2ab(str) {
+    var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+    var bufView = new Uint8Array(buf);
+    for (var i = 0, strLen = str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
   }
 }
