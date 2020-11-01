@@ -28,7 +28,9 @@ export class GenerateService {
   async downloadPdf(options: CreateAttestationOptions) {
     const path = covidUrl;
     const page = await this.browser.newPage();
+    console.log('new page');
     await page.goto(path, { waitUntil: 'networkidle2' });
+    console.log('go to');
 
     const id = uuid();
     const downloadPath = `./tmp/${id}`;
@@ -36,11 +38,14 @@ export class GenerateService {
       behavior: 'allow',
       downloadPath,
     });
+    console.log('set download');
 
     await this.fillFields(page, options);
+    console.log('fill fields');
 
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
+    console.log('generate clicked');
 
     const fileName = await this.waitForFileToDownload(downloadPath);
 
