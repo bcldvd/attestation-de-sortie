@@ -15,6 +15,7 @@ export class GenerateService {
     this.browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      dumpio: true,
     });
   }
 
@@ -59,7 +60,11 @@ export class GenerateService {
         const a = elems[elems.length - 1];
         const url = a['href'];
         const fileName = a['download'];
+
+        console.log('url', url, 'fileName', fileName);
+
         const buff = await fetch(url).then(r => r.arrayBuffer());
+
         return {
           stringifiedBuffer: ab2str(buff),
           fileName,
