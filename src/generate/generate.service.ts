@@ -34,7 +34,7 @@ export class GenerateService {
 
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
-    await page.waitFor(900);
+    await page.waitFor(1500);
 
     const { buffer, fileName } = await this.getFileBuffer(page);
 
@@ -59,8 +59,7 @@ export class GenerateService {
         const a = elems[elems.length - 1];
         const url = a['href'];
         const fileName = a['download'];
-        const buff = null;
-        //const buff = await fetch(url).then(r => r.arrayBuffer());
+        const buff = await fetch(url).then(r => r.arrayBuffer());
         return {
           stringifiedBuffer: ab2str(buff),
           fileName,
