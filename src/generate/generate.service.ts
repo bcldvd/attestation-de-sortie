@@ -32,13 +32,18 @@ export class GenerateService {
     await page.goto(path, { waitUntil: 'networkidle2' });
     console.log('go to');
 
+    await page.setViewport({
+      width: 640,
+      height: 3000,
+    });
+
     const id = uuid();
     const downloadPath = `./tmp/${id}`;
     const cdpsession = await page.target().createCDPSession();
-    await cdpsession.send('Page.setDownloadBehavior', {
+    /* await cdpsession.send('Page.setDownloadBehavior', {
       behavior: 'allow',
       downloadPath,
-    });
+    }); */
     console.log('set download');
 
     await this.fillFields(page, options);
@@ -47,19 +52,25 @@ export class GenerateService {
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
     console.log('generate clicked');
+    await page.waitFor(900);
 
-    const fileName = await this.waitForFileToDownload(downloadPath);
+    const screenshotPath = './tmp/example.png';
+    await page.screenshot({ path: screenshotPath });
+
+    //const fileName = await this.waitForFileToDownload(downloadPath);
 
     page.close();
 
-    const filePath = join(downloadPath, fileName);
-    const buffer = await readFile(filePath);
+    //const filePath = join(downloadPath, fileName);
+    //const buffer = await readFile(filePath);
+    const buffer = await readFile(screenshotPath);
     await rmfr(downloadPath);
     const stream = this.getReadableStream(buffer);
 
     return {
       stream,
-      fileName,
+      //fileName,
+      fileName: screenshotPath,
     };
   }
 

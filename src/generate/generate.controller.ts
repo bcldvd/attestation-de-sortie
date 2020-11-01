@@ -8,7 +8,8 @@ export class GenerateController {
   constructor(private generateService: GenerateService) {}
 
   @Get()
-  @Header('content-type', 'application/pdf')
+  //@Header('content-type', 'application/pdf')
+  @Header('content-type', 'image/png')
   async get(
     @Query('firstName') firstName: string,
     @Query('lastName') lastName: string,
