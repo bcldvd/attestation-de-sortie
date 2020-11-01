@@ -24,8 +24,10 @@ export class GenerateService {
     await page.goto(path, { waitUntil: 'networkidle2' });
     await page.setBypassCSP(true);
 
+    const downloadPath = process.cwd();
     await page._client.send('Page.setDownloadBehavior', {
       behavior: 'allow',
+      downloadPath,
     });
 
     await this.fillFields(page, options);
