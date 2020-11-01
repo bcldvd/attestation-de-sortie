@@ -107,6 +107,7 @@ export class GenerateService {
 
     while (!filename || filename.endsWith('.crdownload')) {
       let dirExist = await exists(downloadPath);
+      console.log(dirExist, downloadPath, fs.readdirSync('./tmp'));
       if (dirExist) {
         filename = fs.readdirSync(downloadPath)[0];
       }
