@@ -35,7 +35,7 @@ export class GenerateService {
 
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
-    await this.delay(15000);
+    await page.waitFor(900);
 
     const { buffer, fileName } = await this.getFileBuffer(page);
 
@@ -122,12 +122,6 @@ export class GenerateService {
     stream.push(null);
 
     return stream;
-  }
-
-  delay(time) {
-    return new Promise(resolve => {
-      setTimeout(resolve, time);
-    });
   }
 
   private str2ab(str) {
