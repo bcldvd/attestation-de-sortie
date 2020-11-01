@@ -43,21 +43,26 @@ export class GenerateService {
   }
 
   async getFileBuffer(page) {
-    const { stringifiedBuffer, fileName } = await page.evaluate(async () => {
-      function ab2str(buf) {
-        return String.fromCharCode.apply(null, new Uint8Array(buf));
-      }
+    const { stringifiedBuffer, fileName, url } = await page.evaluate(
+      async () => {
+        function ab2str(buf) {
+          return String.fromCharCode.apply(null, new Uint8Array(buf));
+        }
 
-      const elems = document.getElementsByTagName('a');
-      const a = elems[elems.length - 1];
-      const url = a['href'];
-      const fileName = a['download'];
-      const buff = await fetch(url).then(r => r.arrayBuffer());
-      return {
-        stringifiedBuffer: ab2str(buff),
-        fileName,
-      };
-    });
+        const elems = document.getElementsByTagName('a');
+        const a = elems[elems.length - 1];
+        const url = a['href'];
+        const fileName = a['download'];
+        const buff = await fetch(url).then(r => r.arrayBuffer());
+        return {
+          stringifiedBuffer: ab2str(buff),
+          fileName,
+          url,
+        };
+      },
+    );
+
+    console.log('blob url :', url);
 
     return {
       buffer: Buffer.from(this.str2ab(stringifiedBuffer)),
