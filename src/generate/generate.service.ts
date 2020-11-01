@@ -24,6 +24,10 @@ export class GenerateService {
     await page.goto(path, { waitUntil: 'networkidle2' });
     await page.setBypassCSP(true);
 
+    await page._client.send('Page.setDownloadBehavior', {
+      behavior: 'allow',
+    });
+
     await this.fillFields(page, options);
 
     const btnId = 'generate-btn';
@@ -53,7 +57,8 @@ export class GenerateService {
         const a = elems[elems.length - 1];
         const url = a['href'];
         const fileName = a['download'];
-        const buff = await fetch(url).then(r => r.arrayBuffer());
+        const buff = null;
+        //const buff = await fetch(url).then(r => r.arrayBuffer());
         return {
           stringifiedBuffer: ab2str(buff),
           fileName,
