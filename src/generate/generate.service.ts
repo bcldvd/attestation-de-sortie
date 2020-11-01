@@ -34,7 +34,8 @@ export class GenerateService {
 
     const id = uuid();
     const downloadPath = `./tmp/${id}`;
-    await page._client.send('Page.setDownloadBehavior', {
+    const cdpsession = await page.target().createCDPSession();
+    await cdpsession.send('Page.setDownloadBehavior', {
       behavior: 'allow',
       downloadPath,
     });
