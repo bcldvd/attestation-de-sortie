@@ -38,7 +38,7 @@ export class GenerateService {
     });
 
     const id = uuid();
-    const downloadPath = `./tmp/${id}`;
+    const downloadPath = join(process.cwd(), `./tmp/${id}`);
     const cdpsession = await page.target().createCDPSession();
     /* await cdpsession.send('Page.setDownloadBehavior', {
       behavior: 'allow',
@@ -54,7 +54,7 @@ export class GenerateService {
     console.log('generate clicked');
     await page.waitFor(900);
 
-    const screenshotPath = './tmp/example.png';
+    const screenshotPath = join(process.cwd(), './tmp/example.png');
     await page.screenshot({ path: screenshotPath });
 
     //const fileName = await this.waitForFileToDownload(downloadPath);
