@@ -81,7 +81,11 @@ export class GenerateService {
 
   private getCurrentTime() {
     const date = new Date();
-    return `${date.getHours()}:${date.getMinutes()}`;
+    let currentHours = '' + date.getHours();
+    currentHours = ('0' + currentHours).slice(-2);
+    let currentMinutes = '' + date.getMinutes();
+    currentMinutes = ('0' + currentMinutes).slice(-2);
+    return `${currentHours}:${currentMinutes}`;
   }
 
   async fillField(page, field, value) {
