@@ -1,66 +1,27 @@
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/50/Bloc_Marianne.svg/440px-Bloc_Marianne.svg.png" width="320" alt="Marianne" />
-</p>
+# AppName
 
-  <p align="center">Générateur d'attestation de déplacement dérogatoire</p>
-  <br>
-    <!-- <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a> -->
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
 
-## Description
+## Development server
 
-Ce générateur remplit [le générateur officiel](https://media.interieur.gouv.fr/deplacement-covid-19/) via puppeteer et expose cela via un endpoint REST.\
-De cette façon, plusieurs usages s'offrent à vous :
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-- Automatiser la génération de **votre** attestation
-- Générer l'attestation via un assistant vocal
+## Code scaffolding
 
-<br>
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Utilisation
+## Build
 
-Cette application n'expose qu'un module : `/generate`.\
-Vos données sont à passer en query parameter, la liste exhaustive se trouve ici : [generate.controller.ts](https://github.com/bcldvd/attestation-de-sortie/blob/master/src/generate/generate.controller.ts)
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-Les parametres suivants se remplissent automatiquement si non définis :
+## Running unit tests
 
-- date
-- time
-- reason
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-`reason` correspond au motif de sortie, dont la liste se trouve ici : [attestation.interfaces.ts](https://github.com/bcldvd/attestation-de-sortie/blob/master/src/generate/attestation.interfaces.ts#L14-L24)
+## Running end-to-end tests
 
-### Exemples d'URLs :
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-```
-http://localhost:3000/generate?firstName=Emmanuel&lastName=Macron&birthday=21/12/1977&placeOfBirth=Amiens&address=55%20Rue%20du%20Faubourg%20Saint-Honor%C3%A9&town=Paris&zipCode=75008&reason=achats
-```
+## Further help
 
-```
-https://attestation-de-sortie.herokuapp.com/generate?firstName=Emmanuel&lastName=Macron&birthday=21/12/1977&placeOfBirth=Amiens&address=55%20Rue%20du%20Faubourg%20Saint-Honor%C3%A9&town=Paris&zipCode=75008
-```
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Lancer l'application
-
-```bash
-# development
-$ npm run dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Support
-
-Ce projet est "open source" et sous la licence MIT. N'hésitez pas à contribuer pour le rendre encore meilleur 🤗.
-
-## Licence
-
-Ce projet est licencié [MIT](LICENSE).
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
