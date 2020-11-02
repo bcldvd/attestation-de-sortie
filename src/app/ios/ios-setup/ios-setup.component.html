@@ -1,0 +1,61 @@
+<h1>Configurer iOS</h1>
+
+<div class="container">
+    <mat-vertical-stepper #stepper>
+        <mat-step optional="true">
+            <ng-template matStepLabel>Activez les raccourcis partagés</ng-template>
+
+            <p class="step-description">Cette étape est optionnelle, car si vous avez déjà ajouté des raccourcis
+                externes, vous avez du le faire.
+                Si ce n'est pas le cas, cliquez sur le lien ci-dessous et suivez la documentation officielle :</p>
+            <a target="_blank" href="https://support.apple.com/fr-fr/guide/shortcuts/apdfeb05586f/ios"
+                class="setup-shortcuts">
+                <p class="link">Activer les raccourcis partagés</p>
+                <p class="apple-support"><img
+                        src="https://www.apple.com/ac/globalnav/5/fr_FR/images/globalnav/apple/image_small.svg"
+                        alt="Apple icon"> Apple Support</p>
+            </a>
+
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Installez le raccourci</ng-template>
+
+            <p class="step-description">Appuyez sur le lien ci-dessous, puis <b>Ajouter le raccourci</b>. Une fois
+                redirigé
+                sur l'application "Raccourcis", passez à l'étape suivante</p>
+            <a class="shortcut" target="_blank"
+                href="https://www.icloud.com/shortcuts/fe1c4d42dd8e4ee591f1f9444a0718ae">
+                <mat-icon>qr_code_2</mat-icon>
+                <h2>Attestation de sortie</h2>
+            </a>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Nommer le raccourci</ng-template>
+            <p>C'est dans le champ <b>Lorsque j'exécute</b>, que vous pouvez indiquer la phrase à dire à Siri pour voir
+                ce raccourci executé <br> Exemple :</p>
+            <img src="/assets/name-shortcut.jpeg" alt="Exemple de question" class="screenshot">
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Visualisez les étapes du raccourci</ng-template>
+            <p>Défilez jusqu'en bas de la page de l'application <b>Raccourcis</b>, qui indique les etapes effectuées par
+                le
+                raccourci, puis appuyez sur le bouton comme celui qui s'affiche en dessous : </p>
+            <button mat-button mat-flat-button color="warn" (click)="doNothing($event)">Ajouter un raccourci non fiable
+            </button>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Configurer le raccourci</ng-template>
+            <p>Vous arriverez à l'étape de configuration du raccourci, qui vous permettra de remplir vos informations.
+                <br> Exemple:</p>
+            <img src="/assets/sample-form-info.jpeg" alt="Exemple de question" class="screenshot">
+
+            <p>Et voila, une fois tout rempli, vous pouvez maintenant invoquer ce raccourci via l'application
+                <b>Raccourci</b> ou via Siri
+                directement 🥳</p>
+        </mat-step>
+    </mat-vertical-stepper>
+</div>

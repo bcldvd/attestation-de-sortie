@@ -1,0 +1,26 @@
+.container {
+    display: grid;
+    grid-template-rows: auto auto 36px;
+    grid-template-areas:
+        "image"
+        "disclaimer"
+        "cta-button";
+    height: calc(100% - 50px);
+}
+
+img {
+    width: 100%;
+    max-width: 710px;
+    grid-area: image;
+    align-self: center;
+    justify-self: center;
+}
+
+.disclaimer {
+    grid-area: disclaimer;
+    text-align: center;
+}
+
+button {
+    grid-area: cta-button;
+}

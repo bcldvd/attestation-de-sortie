@@ -1,27 +1,42 @@
-# AppName
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/50/Bloc_Marianne.svg/440px-Bloc_Marianne.svg.png" width="320" alt="Marianne" />
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
+  <p align="center">Générateur d'attestation de déplacement dérogatoire</p>
+  <br>
+    <!-- <p align="center">
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a> -->
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+> Cette branche est pour la documentation de ce projet.
 
-## Code scaffolding
+Ce générateur remplit [le générateur officiel](https://media.interieur.gouv.fr/deplacement-covid-19/) via puppeteer et expose cela via un endpoint REST.\
+De cette façon, plusieurs usages s'offrent à vous :
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Automatiser la génération de **votre** attestation
+- Générer l'attestation via un assistant vocal
 
-## Build
+<br>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Installation
 
-## Running unit tests
+```bash
+$ npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Lancer l'application
 
-## Running end-to-end tests
+```bash
+# development
+$ npm run dev
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Support
 
-## Further help
+Ce projet est "open source" et sous la licence MIT. N'hésitez pas à contribuer pour le rendre encore meilleur 🤗.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Licence
+
+Ce projet est licencié [MIT](LICENSE).
