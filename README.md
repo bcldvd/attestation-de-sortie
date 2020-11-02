@@ -57,6 +57,13 @@ $ npm run dev
 $ npm run start:prod
 ```
 
+## Déployer sur Heroku
+
+Dans les settings d'Heroku :
+
+- Ajouter la **Config Var** `TZ` -> `Europe/Paris`
+- Ajouter le **buildpack** [jontewks/puppeteer](https://github.com/jontewks/puppeteer-heroku-buildpack)
+
 ## Support
 
 Ce projet est "open source" et sous la licence MIT. N'hésitez pas à contribuer pour le rendre encore meilleur 🤗.
