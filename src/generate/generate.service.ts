@@ -33,6 +33,8 @@ export class GenerateService {
 
     await this.fillFields(page, options);
 
+    this.logResults(page);
+
     const btnId = 'generate-btn';
     await page.click(`button#${btnId}`);
     await page.waitForSelector('a[download]');
@@ -79,6 +81,38 @@ export class GenerateService {
       buffer: Buffer.from(this.str2ab(stringifiedBuffer)),
       fileName,
     };
+  }
+
+  async logResults(page) {
+    await page.evaluate(async () => {
+      const fields = [
+        'field-firstname',
+        'field-lastname',
+        'field-birthday',
+        'field-placeofbirth',
+        'field-address',
+        'field-city',
+        'field-zipcode',
+        'field-datesortie',
+        'field-heuresortie',
+      ];
+
+      const result = {} as any;
+
+      fields.forEach(fieldName => {
+        const field = document.getElementById(fieldName) as HTMLInputElement;
+        result[fieldName] = {
+          value: field.value,
+          valid: field.validity.valid,
+        };
+      });
+
+      const alertClasses = document.getElementsByClassName('msg-alert')[0]
+        .classList.value;
+      result.alertShown = !alertClasses.includes('hidden');
+
+      console.log('Result :', JSON.stringify(result));
+    });
   }
 
   async fillFields(page, options) {
