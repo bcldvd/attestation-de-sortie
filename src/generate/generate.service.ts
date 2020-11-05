@@ -111,6 +111,15 @@ export class GenerateService {
         .classList.value;
       result.alertShown = !alertClasses.includes('hidden');
 
+      const reasons = ([
+        ...document.querySelectorAll('[name="field-reason"]'),
+      ] as HTMLInputElement[])
+        .filter(input => input.checked)
+        .map(input => input.value)
+        .join(', ');
+
+      result.reasons = reasons;
+
       console.log('Result :', JSON.stringify(result));
     });
   }
