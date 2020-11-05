@@ -138,7 +138,11 @@ export class GenerateService {
     await this.fillField(page, '#field-zipcode', options.zipCode);
     await this.fillCheckbox(page, options.reason);
     await this.fillField(page, '#field-datesortie', options.date);
-    await this.fillField(page, '#field-heuresortie', options.time);
+    await page.$eval(
+      '#field-heuresortie',
+      (el, value) => (el.value = value),
+      options.time,
+    );
   }
 
   private getCurrentTime() {
