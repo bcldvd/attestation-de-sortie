@@ -13,7 +13,7 @@ export interface CreateAttestationOptions {
 
 export enum MotifDeSortie {
   travail = 'travail',
-  achats = 'achats',
+  achats_culturel_cultuel = 'achats_culturel_cultuel',
   sante = 'sante',
   famille = 'famille',
   handicap = 'handicap',

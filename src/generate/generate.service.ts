@@ -161,7 +161,8 @@ export class GenerateService {
   }
 
   async fillCheckbox(page, choice: MotifDeSortie) {
-    if (!choice) choice = MotifDeSortie.achats;
+    if (!choice || (choice as any) === 'achats')
+      choice = MotifDeSortie.achats_culturel_cultuel;
     await page.evaluate(choice => {
       (document.querySelector(`#checkbox-${choice}`) as any).click();
     }, choice);
